@@ -296,12 +296,47 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Mobile navigation toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #eee;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            /* Stack navigation items vertically on small screens */
+            .navbar {
+                flex-wrap: wrap;
+            }
+            .navbar ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                padding: 10px 0;
+            }
+            .navbar ul.open {
+                display: flex;
+            }
+            .navbar li {
+                margin: 10px 0;
+                text-align: center;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <a href="#inicio"><img src="logo.png" alt="Rub3n Barb3r Logo" class="logo"></a>
+            <!-- Mobile menu toggle button -->
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
             <ul>
                 <li><a href="#inicio" class="active">Inicio</a></li>
                 <li><a href="#about">Quiénes somos</a></li>
@@ -483,6 +518,15 @@
                 modal.style.display = 'none';
             }
         });
+
+        // Mobile navigation toggle functionality
+        const menuToggleBtn = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('.navbar ul');
+        if (menuToggleBtn && navUl) {
+            menuToggleBtn.addEventListener('click', () => {
+                navUl.classList.toggle('open');
+            });
+        }
     </script>
 </body>
 </html>
