@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Rub3n Barb3r – Barbería en Lleida</title>
+    <!-- Import Montserrat font for a sleek, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global styles */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            color: #eee;
+            background: #111;
+            scroll-behavior: smooth;
+        }
+
+        /* Fixed top navigation with logo */
+        header {
+            background: #111;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .navbar .logo {
+            /* Amplía el logotipo para darle mayor protagonismo */
+            height: 80px;
+        }
+        .navbar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        .navbar li {
+            margin-left: 20px;
+        }
+        .navbar a {
+            color: #eee;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .navbar a:hover,
+        .navbar a.active {
+            color: #e9b240;
+        }
+
+        /* Generic section padding */
+        section {
+            padding: 80px 20px;
+        }
+
+        /* Hero section with large background image and overlay */
+        .hero {
+            height: 100vh;
+            background: url('hero.jpg') no-repeat center center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        .hero-content h1 {
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            color: #e9b240;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+
+        /* Stats bar below hero */
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            background: #171717;
+            padding: 40px 20px;
+        }
+        .stat {
+            text-align: center;
+        }
+        .stat .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #e9b240;
+        }
+        .stat .label {
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+
+        /* Section titles */
+        .section-title {
+            font-size: 2rem;
+            color: #e9b240;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        /* About section */
+        .about {
+            background: #1b1b1b;
+        }
+        .about p {
+            max-width: 800px;
+            margin: 0 auto 1rem auto;
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        /* Services section */
+        .services {
+            background: #111;
+        }
+        .service-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .service-card {
+            background: #1b1b1b;
+            border-radius: 10px;
+            padding: 20px;
+            width: 250px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        .service-card h3 {
+            color: #e9b240;
+            margin-top: 0;
+        }
+        .service-card .price {
+            color: #e9b240;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Gallery section */
+        .gallery {
+            background: #111;
+        }
+        .gallery-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding-bottom: 10px;
+            scrollbar-width: none; /* hide scrollbar on Firefox */
+        }
+        .gallery-container::-webkit-scrollbar {
+            display: none; /* hide scrollbar on Chrome */
+        }
+        .gallery-container img {
+            height: 260px;
+            border-radius: 10px;
+            flex: 0 0 auto;
+        }
+
+        /* Modal zoom styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .modal-content {
+            display: block;
+            margin: 5% auto;
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Reviews section */
+        .reviews {
+            background: #1b1b1b;
+            text-align: center;
+        }
+        .reviews p {
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .rating-stars {
+            font-size: 1.5rem;
+            color: #e9b240;
+            margin-bottom: 10px;
+        }
+
+        /* Contact section */
+        .contact {
+            background: #111;
+            color: #ccc;
+            text-align: center;
+        }
+        .contact p {
+            margin: 0.5rem auto;
+        }
+
+        /* Map container styling */
+        .map-container {
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Review list styling */
+        .review-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        /* Tarjeta para cada reseña */
+        .review-card {
+            /* Color de fondo ligeramente más claro para resaltar sobre el fondo general */
+            background: #222222;
+            border-left: 4px solid #e9b240;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            color: #ddd;
+            font-style: italic;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Fade-in effect for sections */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="#inicio"><img src="logo.png" alt="Rub3n Barb3r Logo" class="logo"></a>
+            <ul>
+                <li><a href="#inicio" class="active">Inicio</a></li>
+                <li><a href="#about">Quiénes somos</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#gallery">Galería</a></li>
+                <li><a href="#reviews">Reseñas</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero section -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <h1>Rub3n Barb3r</h1>
+            <p>Revolucionando el mundo de la barbería en Lleida: experiencia, estilo y profesionalidad.</p>
+        </div>
+    </section>
+
+    <!-- Stats bar showing key figures -->
+    <div class="stats fade-in">
+        <div class="stat">
+            <div class="number">5.0</div>
+            <div class="label">Valoración media</div>
+        </div>
+        <div class="stat">
+            <div class="number">439</div>
+            <div class="label">Reseñas</div>
+        </div>
+        <div class="stat">
+            <div class="number">2</div>
+            <div class="label">Barberos</div>
+        </div>
+    </div>
+
+    <!-- About section -->
+    <section id="about" class="about fade-in">
+        <div class="section-title">Quiénes somos</div>
+        <p>En Rub3n Barb3r ofrecemos una barbería moderna y profesional en la que cada visita se convierte en una experiencia única. Valoramos la puntualidad; los clientes que no asistan a su cita sin avisar deberán abonar el servicio completo. Nuestro equipo está formado por Rubén y Pau, barberos con amplia experiencia y pasión por su oficio.</p>
+        <p>Desde cortes clásicos hasta degradados con estilo, trabajamos con dedicación para que tu imagen refleje tu personalidad.</p>
+    </section>
+
+    <!-- Services section -->
+    <section id="services" class="services fade-in">
+        <div class="section-title">Servicios</div>
+        <div class="service-cards">
+            <div class="service-card">
+                <h3>Corte degradado</h3>
+                <div class="price">17,00&nbsp;€</div>
+                <p>Corte con degradado perfecto y acabado preciso en 30&nbsp;minutos.</p>
+            </div>
+            <div class="service-card">
+                <h3>Degradado + barba</h3>
+                <div class="price">23,00&nbsp;€</div>
+                <p>Incluye corte degradado y arreglo completo de barba en 30&nbsp;minutos.</p>
+            </div>
+            <div class="service-card">
+                <h3>Corte clásico</h3>
+                <div class="price">17,00&nbsp;€</div>
+                <p>Corte tradicional con estilo y limpieza, realizado en 30&nbsp;minutos.</p>
+            </div>
+            <div class="service-card">
+                <h3>Niños / jubilados</h3>
+                <div class="price">15,00&nbsp;€</div>
+                <p>Corte adaptado a los más pequeños o jubilados con un trato cercano en 20&nbsp;minutos.</p>
+            </div>
+            <div class="service-card">
+                <h3>Arreglo de barba</h3>
+                <div class="price">13,00&nbsp;€</div>
+                <p>Dale forma y estilo a tu barba en 20&nbsp;minutos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery section with horizontal scroll -->
+    <section id="gallery" class="gallery fade-in">
+        <div class="section-title">Galería</div>
+        <div class="gallery-container">
+            <img src="hero.jpg" alt="Exterior de la barbería Rub3n Barb3r">
+            <img src="interior1.jpg" alt="Interior con sillas de barbero">
+            <img src="interior2.jpg" alt="Zona de lavado con neón Rub3n Barb3r">
+            <!-- Nuevas imágenes de cortes -->
+            <img src="cut1.png" alt="Corte de pelo degradado con estilo">
+            <img src="cut2.png" alt="Corte degradado con diseño lateral">
+            <img src="cut3.png" alt="Corte rubio con degradado alto">
+            <img src="cut4.png" alt="Corte rizado con degradado en la nuca">
+            <img src="cut5.png" alt="Corte con diseño artístico en el lateral">
+            <img src="cut6.png" alt="Corte con trenza lateral y fade">
+            <img src="cut7.png" alt="Corte con estilo moderno y textura">
+            <img src="cut8.png" alt="Corte masculino con barba y degradado">
+        </div>
+    </section>
+
+    <!-- Modal for zooming images -->
+    <div id="modal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modal-img" alt="Imagen ampliada">
+    </div>
+
+    <!-- Reviews section -->
+    <section id="reviews" class="reviews fade-in visible">
+        <div class="section-title">Reseñas</div>
+        <div class="rating-stars">★★★★★</div>
+        <p>Valoración media de 5/5 basada en 439 reseñas verificadas. La mayoría de clientes nos califican con 5&nbsp;estrellas, lo que demuestra nuestra calidad y dedicación.</p>
+        <div class="review-list">
+            <div class="review-card">“Gran servicio. Mejor barbería de Lleida”</div>
+            <div class="review-card">“Molt bon servei!”</div>
+            <div class="review-card">“Muy buen servicio”</div>
+            <div class="review-card">“10/10 como siempre”</div>
+            <div class="review-card">“Servicio excelente, muy profesional y el resultado quedó perfecto”</div>
+            <div class="review-card">“Mi hijo encantado con el trato y su look”</div>
+        </div>
+        <p><a href="https://booksy.com/es-es/59506_rub3n-barb3r_barberia_51784_lleida#reviews" target="_blank" rel="noopener" style="color:#e9b240;">Ver más reseñas en Booksy</a></p>
+    </section>
+
+    <!-- Contact section -->
+    <section id="contact" class="contact fade-in visible">
+        <div class="section-title">Contacto</div>
+        <p><strong>Dirección:</strong> Carrer del Baró de Maials&nbsp;81, 25005, Lleida.</p>
+        <p><strong>Horario:</strong> Lunes a viernes de 10:00&nbsp;a&nbsp;14:00 y de 16:00&nbsp;a&nbsp;20:00.</p>
+        <p><strong>Redes sociales:</strong> Síguenos en <a href="https://www.instagram.com/" target="_blank" rel="noopener" style="color:#e9b240;">Instagram</a> y reserva tu cita en Booksy.</p>
+        <!-- Mapa integrado con Google Maps -->
+        <div class="map-container">
+            <!-- Cambiamos el mapa para apuntar directamente al local mediante el nombre de la empresa para que aparezca el marcador del negocio -->
+            <iframe src="https://www.google.com/maps?q=Ruben+Barber+Lleida&hl=es&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2026 Rub3n Barb3r. Todos los derechos reservados.
+    </footer>
+
+    <!-- Script to update active nav links and reveal sections -->
+    <script>
+        const sections = document.querySelectorAll('section, .stats');
+        const navLinks = document.querySelectorAll('.navbar a');
+        function onScroll() {
+            const scrollY = window.pageYOffset;
+            sections.forEach(sec => {
+                const id = sec.getAttribute('id');
+                const top = sec.offsetTop - 120;
+                const bottom = top + sec.offsetHeight;
+                if (scrollY >= top && scrollY < bottom) {
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    if (id) {
+                        const activeLink = document.querySelector('.navbar a[href="#' + id + '"]');
+                        if (activeLink) activeLink.classList.add('active');
+                    }
+                }
+                // Fade-in when near viewport
+                const rect = sec.getBoundingClientRect();
+                if (rect.top < window.innerHeight - 50) {
+                    sec.classList.add('visible');
+                }
+            });
+        }
+        document.addEventListener('scroll', onScroll);
+        window.addEventListener('load', onScroll);
+
+        // Modal zoom effect for gallery images
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeBtn = document.querySelector('.modal-close');
+        const galleryImgs = document.querySelectorAll('.gallery-container img');
+
+        galleryImgs.forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = 'block';
+                modalImg.src = img.src;
+            });
+        });
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        modal.addEventListener('click', (e) => {
+            // Close modal when clicking outside the image
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
